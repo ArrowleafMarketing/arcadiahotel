@@ -1,0 +1,12 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /private
+Disallow: /drafts
+
+# Host
+Host: https://stayarcadia.com
+
+# Sitemaps
+Sitemap: https://stayarcadia.com/sitemap.xml

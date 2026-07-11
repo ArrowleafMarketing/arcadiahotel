@@ -1,26 +1,193 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #f1f0eb;
   --foreground: #171717;
+  --accent-green: #bfd9bd;
+  --accent-green-border: #9ec29e;
+  --accent-green-ink: #1f231f;
+  --ink: #111111;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-accent-green: var(--accent-green);
+  --font-sans: var(--font-poppins);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
+  margin: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-poppins), Arial, Helvetica, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+nav,
+nav a,
+button,
+a[class*="rounded-full"],
+span[class*="rounded-full"],
+.font-display {
+  font-family: var(--font-montserrat), Arial, Helvetica, sans-serif;
+}
+
+h1,
+h2 {
+  font-weight: 500;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 400;
+}
+
+@layer base {
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+@layer components {
+  /* Eyebrow: the small green label pill used above section headings. */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    border: 1px solid var(--accent-green-border);
+    background: var(--accent-green);
+    padding: 0.5rem 1.25rem;
+    font-size: 0.98rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: var(--accent-green-ink);
+    font-family: var(--font-montserrat), Arial, Helvetica, sans-serif;
+  }
+
+  /* Button system. Compose a base `.btn` with a variant, and (optionally)
+     nest a `.btn-arrow` span that slides on hover — no `group` class needed. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    border-radius: 9999px;
+    border: 1px solid transparent;
+    font-family: var(--font-montserrat), Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 200ms ease, background-color 200ms ease,
+      border-color 200ms ease;
+  }
+
+  .btn-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    padding: 0.25rem;
+    transition: transform 300ms ease;
+  }
+
+  .btn:hover .btn-arrow {
+    transform: translateX(0.75rem);
+  }
+
+  /* Light: white → green (primary CTA on light/photo backgrounds). */
+  .btn-light {
+    min-height: 2.75rem;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    background: #ffffff;
+    color: #000000;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+  .btn-light:hover {
+    border-color: var(--accent-green-border);
+    background: var(--accent-green);
+    color: var(--accent-green-ink);
+  }
+  .btn-light .btn-arrow {
+    background: #000000;
+    color: #ffffff;
+  }
+
+  /* Green: green pill → black (secondary CTA / eyebrow-sized link). */
+  .btn-green {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.98rem;
+    font-weight: 400;
+    border-color: var(--accent-green-border);
+    background: var(--accent-green);
+    color: var(--accent-green-ink);
+  }
+  .btn-green:hover {
+    border-color: #000000;
+    background: #000000;
+    color: #ffffff;
+  }
+  .btn-green .btn-arrow {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  /* Dark: black → green (header CTA). */
+  .btn-dark {
+    min-height: 2.75rem;
+    padding: 0 1.5rem;
+    font-size: 15px;
+    border-color: #000000;
+    background: #000000;
+    color: #ffffff;
+  }
+  .btn-dark:hover {
+    border-color: var(--accent-green-border);
+    background: var(--accent-green);
+    color: var(--accent-green-ink);
+  }
+  .btn-dark .btn-arrow {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  /* Text: no pill background (inline text link with arrow). */
+  .btn-text {
+    color: var(--ink);
+    font-weight: 400;
+  }
+  .btn-text:hover {
+    color: var(--accent-green-ink);
+  }
+  .btn-text .btn-arrow {
+    background: #000000;
+    color: #ffffff;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
