@@ -80,7 +80,7 @@ export function GalleryCarousel({ cards }: { cards: GalleryCard[] }) {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="mt-20 overflow-hidden">
+      <div className="mt-12 overflow-hidden sm:mt-20">
         <div
           className="flex"
           style={{

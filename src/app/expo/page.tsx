@@ -13,7 +13,7 @@ export default function ExpoPage() {
   return (
     <section className="bg-[var(--background)] px-6 py-16 sm:px-10 lg:px-16 lg:py-20">
       <div className="mx-auto max-w-[720px]">
-        <h1 className="text-center text-[clamp(2.4rem,4vw,3.6rem)] font-light tracking-[-0.055em] text-[#111111]">
+        <h1 className="text-center text-[clamp(1.9rem,4vw,3.6rem)] font-light tracking-[-0.055em] text-[#111111]">
           Enter to Win a 2-Night Getaway
         </h1>
 

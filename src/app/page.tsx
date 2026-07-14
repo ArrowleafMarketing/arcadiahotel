@@ -95,7 +95,7 @@ export default function Home() {
           <span className="font-display mb-7 inline-flex items-center rounded-full border border-white/30 bg-white/10 px-5 py-2 text-[0.98rem] font-normal tracking-[0.01em] shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur-sm">
             Welcome to Arcadia Hotel
           </span>
-          <h1 className="max-w-[1080px] text-[clamp(3.7rem,7.4vw,5.9rem)] font-light leading-[0.95] tracking-[-0.055em] text-white">
+          <h1 className="max-w-[1080px] text-[clamp(2.4rem,7.4vw,5.9rem)] font-light leading-[0.95] tracking-[-0.055em] text-white">
             Boise&apos;s First Contactless Hotel
           </h1>
           <p className="mt-8 text-[clamp(1.25rem,2vw,2rem)] font-normal tracking-[-0.03em] text-white/94">
@@ -112,14 +112,14 @@ export default function Home() {
           </a>
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-4 px-7 pb-7">
-          <div className="flex items-center gap-3">
+        <div className="absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-3 px-4 pb-5 sm:gap-4 sm:px-7 sm:pb-7">
+          <div className="flex items-center gap-2 sm:gap-3">
             {socialItems.map((item) => (
               <a
                 key={item.label}
                 href="#"
                 aria-label={item.label}
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/35 bg-black/14 text-sm font-medium uppercase text-white backdrop-blur-sm transition-colors hover:bg-black/24"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/35 bg-black/14 text-sm font-medium uppercase text-white backdrop-blur-sm transition-colors hover:bg-black/24 sm:h-12 sm:w-12"
               >
                 {item.icon}
               </a>
@@ -150,7 +150,7 @@ export default function Home() {
       <section className="bg-[var(--background)] px-6 py-14 sm:px-10 lg:px-16 lg:py-16">
         <div className="mx-auto max-w-[1220px]">
           <div className="mx-auto max-w-[1120px] text-center">
-            <h2 className="text-[clamp(2.5rem,4.5vw,4rem)] font-light tracking-[-0.05em] text-[#111111]">
+            <h2 className="text-[clamp(2.05rem,4.5vw,4rem)] font-light tracking-[-0.05em] text-[#111111]">
               For The Modern Day Traveler
             </h2>
             <p className="mx-auto mt-2 max-w-[1080px] text-[clamp(1rem,1.45vw,1.28rem)] leading-[1.7] tracking-[-0.025em] text-[#6d7178]">
@@ -185,7 +185,7 @@ export default function Home() {
             <span className="font-display inline-flex items-center rounded-full border border-[#c8d1c7] bg-[#e8ede6] px-5 py-2 text-[1.05rem] font-normal tracking-[-0.025em] text-[#1f2521]">
               Thoughtfully Designed, With You In Mind
             </span>
-            <h2 className="mt-6 max-w-[980px] text-[clamp(2.8rem,5vw,4.7rem)] font-light leading-[1.02] tracking-[-0.055em] text-[#111111]">
+            <h2 className="mt-6 max-w-[980px] text-[clamp(2.2rem,5vw,4.7rem)] font-light leading-[1.02] tracking-[-0.055em] text-[#111111]">
               From Sunliner to Arcadia: The Journey
             </h2>
             <p className="mt-8 max-w-[1120px] text-[clamp(1.04rem,1.45vw,1.32rem)] leading-[1.72] tracking-[-0.025em] text-[#666c74]">
@@ -203,7 +203,7 @@ export default function Home() {
 
       <section className="bg-[var(--background)] px-6 py-14 sm:px-10 lg:px-16 lg:py-16">
         <div className="mx-auto max-w-[1220px]">
-          <h2 className="text-center text-[clamp(2.8rem,4.4vw,4.25rem)] font-light tracking-[-0.05em] text-[#111111]">
+          <h2 className="text-center text-[clamp(2rem,4.4vw,4.25rem)] font-light tracking-[-0.05em] text-[#111111]">
             Date Night: Upgraded
           </h2>
 
@@ -264,7 +264,7 @@ export default function Home() {
       <NeighborsMarquee />
 
       <section className="bg-[var(--background)] px-6 py-14 sm:px-10 lg:px-16 lg:py-16">
-        <div className="relative mx-auto max-w-[1220px] overflow-hidden rounded-[24px] bg-accent-green px-8 py-8 sm:px-12 sm:py-10 lg:px-14 lg:py-10">
+        <div className="relative mx-auto max-w-[1220px] overflow-hidden rounded-[24px] bg-accent-green px-5 py-8 sm:px-12 sm:py-10 lg:px-14 lg:py-10">
           <Image
             src="/assets/background_1.png"
             alt=""
@@ -272,7 +272,7 @@ export default function Home() {
             className="object-cover opacity-40"
           />
           <div className="relative z-10 grid gap-8 lg:grid-cols-[1.2fr_0.7fr] lg:items-center">
-            <div className="max-w-[640px] px-4 py-4 lg:px-6 lg:py-6">
+            <div className="max-w-[640px] py-4 lg:px-6 lg:py-6">
               <div className="flex h-[120px] w-[120px] flex-col items-center justify-center rounded-[20px] border border-white/45 bg-white/14 shadow-[inset_0_1px_0_rgba(255,255,255,0.3)] backdrop-blur-[1px]">
                 <svg
                   viewBox="0 0 24 24"
@@ -286,7 +286,7 @@ export default function Home() {
                 </span>
               </div>
 
-              <h2 className="mt-4 text-[clamp(2.4rem,4vw,3.8rem)] font-light tracking-[-0.06em] text-[#111111]">
+              <h2 className="mt-4 text-[clamp(1.85rem,4vw,3.8rem)] font-light tracking-[-0.06em] text-[#111111]">
                 Why Arcadia?
               </h2>
               <p className="mt-4 max-w-[640px] text-[clamp(1rem,1.3vw,1.18rem)] leading-[1.72] tracking-[-0.025em] text-[#181818]">
@@ -330,7 +330,7 @@ export default function Home() {
             <span className="eyebrow">Stay In The Know</span>
           </div>
 
-          <h2 className="mt-6 text-center text-[clamp(3rem,4.5vw,4.3rem)] font-light tracking-[-0.055em] text-[#111111]">
+          <h2 className="mt-6 text-center text-[clamp(2.4rem,7vw,3rem)] font-light tracking-[-0.055em] text-[#111111] lg:text-[clamp(3rem,4.5vw,4.3rem)]">
             Subscribe to Our Newsletter
           </h2>
 

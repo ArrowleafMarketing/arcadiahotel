@@ -182,6 +182,25 @@ h6 {
   }
 }
 
+/* Scroll-into-view reveal.
+   The initial hidden state only applies once <html> has `reveal-enabled`
+   (added pre-paint by an inline script), and never for reduced-motion users,
+   so content is always visible if JS is off or motion is unwanted. Each
+   direct child of <main> — i.e. each page section — fades and lifts into place
+   as it enters the viewport; ScrollReveal adds `.reveal-in`. */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-enabled main > * {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease-out, transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .reveal-enabled main > .reveal-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @keyframes marquee {
   from {
     transform: translate3d(0, 0, 0);

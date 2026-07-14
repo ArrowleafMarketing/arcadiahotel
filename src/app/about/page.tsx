@@ -120,7 +120,7 @@ export default function AboutPage() {
           {valueCards.map((card) => (
             <div
               key={card.title}
-              className="rounded-[18px] border border-[#d9d5cf] px-10 py-10"
+              className="rounded-[18px] border border-[#d9d5cf] px-6 py-8 sm:px-10 sm:py-10"
             >
               <span className="flex h-[48px] w-[48px] items-center justify-center rounded-full bg-[#090b08] text-[#d5ecd0]">
                 {card.icon === "building" ? (

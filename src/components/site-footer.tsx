@@ -8,7 +8,7 @@ export function SiteFooter() {
       <div className="mx-auto max-w-[1220px]">
         <div className="grid gap-14 lg:grid-cols-2 lg:gap-10">
           <div>
-            <a href="/" className="relative block h-[86px] w-[280px]">
+            <a href="/" className="relative block h-[74px] w-[240px] sm:h-[86px] sm:w-[280px]">
               <Image src="/assets/logo_2.png" alt="Arcadia Hotel" fill className="object-contain object-left" />
             </a>
 

@@ -76,7 +76,7 @@ const privacyChoices = [
 
 function PrivacySectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="mt-14 text-[clamp(2.25rem,3vw,3rem)] font-semibold tracking-[-0.05em] text-[#111111]">
+    <h2 className="mt-14 text-[1.9rem] font-semibold tracking-[-0.05em] text-[#111111] lg:text-[clamp(2.25rem,3vw,3rem)]">
       {children}
     </h2>
   );
@@ -112,7 +112,7 @@ export default function PrivacyPolicyPage() {
   return (
     <>
       <section className="flex min-h-[256px] items-center justify-center rounded-[22px] bg-[#656561] px-6 py-12 text-center sm:min-h-[300px]">
-        <h1 className="text-[clamp(3.2rem,5.2vw,5rem)] font-light tracking-[-0.055em] text-white">
+        <h1 className="text-[clamp(2.4rem,5.2vw,5rem)] font-light tracking-[-0.055em] text-white">
           Privacy Policy
         </h1>
       </section>

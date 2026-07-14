@@ -13,10 +13,20 @@ const photos = [
   "/assets/arcadia_22.jpg",
 ];
 
-const PER_PAGE = 3;
+function usePerPage() {
+  const [perPage, setPerPage] = useState(3);
+  useEffect(() => {
+    const update = () => setPerPage(window.innerWidth < 640 ? 2 : 3);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+  return perPage;
+}
 
 export function FooterCarousel() {
   const total = photos.length;
+  const PER_PAGE = usePerPage();
   const [current, setCurrent] = useState(0);
   const [animated, setAnimated] = useState(true);
   const [paused, setPaused] = useState(false);

@@ -161,7 +161,7 @@ export function DateNightGallery() {
           </div>
 
           {/* Image area */}
-          <div className="relative flex flex-1 items-center justify-center overflow-hidden px-16">
+          <div className="relative flex flex-1 items-center justify-center overflow-hidden px-4 sm:px-16">
             {/* Click backdrop to close */}
             <button
               type="button"

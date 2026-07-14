@@ -127,7 +127,7 @@ export default function BookPage() {
         <div className="absolute inset-0 bg-black/34" />
 
         <div className="relative z-10 flex min-h-[402px] flex-col items-center justify-center px-6 py-14 text-center text-white">
-          <h1 className="text-[clamp(2.4rem,3.6vw,3.6rem)] font-light tracking-[-0.055em] text-white">
+          <h1 className="text-[clamp(1.75rem,3.6vw,3.6rem)] font-light tracking-[-0.055em] text-white lg:text-[clamp(2.4rem,3.6vw,3.6rem)]">
             Book Your Stay with Arcadia Hotel
           </h1>
           <a href={BOOKING_URL} className="btn btn-green mt-6">
@@ -145,7 +145,7 @@ export default function BookPage() {
             <span className="font-display inline-flex items-center rounded-full border border-[#d8c987] bg-[#f5edc7] px-5 py-2 text-[0.98rem] font-normal tracking-[-0.02em] text-[#1f231f]">
               Modern Design
             </span>
-            <h2 className="mt-4 text-[clamp(3rem,4.5vw,4.7rem)] font-light tracking-[-0.055em] text-[#111111]">
+            <h2 className="mt-4 text-[clamp(2.25rem,4.5vw,4.7rem)] font-light tracking-[-0.055em] text-[#111111] lg:text-[clamp(3rem,4.5vw,4.7rem)]">
               Relax and Recharge
             </h2>
           </div>
@@ -202,7 +202,7 @@ export default function BookPage() {
       </section>
 
       <section className="bg-[var(--background)] px-6 py-14 sm:px-10 lg:px-16 lg:py-16">
-        <div className="relative mx-auto max-w-[1220px] overflow-hidden rounded-[24px] bg-accent-green px-8 py-8 sm:px-12 sm:py-10 lg:px-14 lg:py-10">
+        <div className="relative mx-auto max-w-[1220px] overflow-hidden rounded-[24px] bg-accent-green px-5 py-8 sm:px-12 sm:py-10 lg:px-14 lg:py-10">
           <Image
             src="/assets/background_1.png"
             alt=""
@@ -210,7 +210,7 @@ export default function BookPage() {
             className="object-cover opacity-40"
           />
           <div className="relative z-10 grid gap-8 lg:grid-cols-[1.2fr_0.7fr] lg:items-center">
-            <div className="max-w-[640px] px-4 py-4 lg:px-6 lg:py-6">
+            <div className="max-w-[640px] py-4 lg:px-6 lg:py-6">
               <div className="flex h-[120px] w-[120px] flex-col items-center justify-center rounded-[20px] border border-white/45 bg-white/14 shadow-[inset_0_1px_0_rgba(255,255,255,0.3)] backdrop-blur-[1px]">
                 <svg
                   viewBox="0 0 24 24"
@@ -224,7 +224,7 @@ export default function BookPage() {
                 </span>
               </div>
 
-              <h2 className="mt-4 text-[clamp(2.4rem,4vw,3.8rem)] font-light tracking-[-0.06em] text-[#111111]">
+              <h2 className="mt-4 text-[clamp(1.85rem,4vw,3.8rem)] font-light tracking-[-0.06em] text-[#111111]">
                 Why Arcadia?
               </h2>
               <p className="mt-4 max-w-[640px] text-[clamp(1rem,1.3vw,1.18rem)] leading-[1.72] tracking-[-0.025em] text-[#181818]">

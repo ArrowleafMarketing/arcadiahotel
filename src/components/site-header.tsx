@@ -19,8 +19,8 @@ export function SiteHeader() {
 
   return (
     <>
-      <header className="flex items-center justify-between gap-6 px-1 py-1">
-        <a href="/" className="relative block h-[50px] w-[160px] shrink-0 lg:h-[64px] lg:w-[200px]">
+      <header className="flex items-center justify-between gap-3 px-1 py-1 lg:gap-6">
+        <a href="/" className="relative block h-[42px] w-[132px] shrink-0 max-[360px]:w-[116px] lg:h-[64px] lg:w-[200px]">
           <Image src="/assets/logo_1.png" alt="Arcadia Hotel" fill className="object-contain object-left" />
         </a>
 
@@ -42,10 +42,10 @@ export function SiteHeader() {
         <div className="flex items-center gap-3">
           <a
             href="https://booking.stayarcadia.com/"
-            className="btn btn-dark gap-2 px-4 lg:gap-3 lg:px-6"
+            className="btn btn-dark gap-2 px-3 text-[13px] sm:px-4 sm:text-[15px] lg:gap-3 lg:px-6"
           >
             <span className="whitespace-nowrap">BOOK NOW</span>
-            <span className="btn-arrow p-1 lg:p-[0.25rem]">
+            <span className="btn-arrow hidden p-1 sm:inline-flex lg:p-[0.25rem]">
               <ArrowRightIcon className="h-3 w-3 lg:h-4 lg:w-4" />
             </span>
           </a>

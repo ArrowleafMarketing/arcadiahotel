@@ -95,7 +95,7 @@ export function NeighborsMarquee() {
                 className="flex shrink-0 items-center justify-center px-6"
                 style={{ width: `${itemWidth}%` }}
               >
-                <div className="relative h-[260px] w-full">
+                <div className="relative h-[170px] w-full sm:h-[260px]">
                   <Image
                     src={partner.src}
                     alt={partner.alt}

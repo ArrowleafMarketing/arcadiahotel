@@ -3,6 +3,7 @@ import { Montserrat, Poppins } from "next/font/google";
 import Script from "next/script";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { ScrollReveal } from "@/components/scroll-reveal";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { StructuredData } from "@/components/seo/structured-data";
 import {
@@ -119,11 +120,19 @@ export default function RootLayout({
       <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID!} />
 
       <body className="min-h-full bg-[var(--background)] text-[var(--foreground)]">
+        {/* Mark <html> before first paint so section reveals never flash. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "document.documentElement.classList.add('reveal-enabled')",
+          }}
+        />
         <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-4 px-5 pt-4 pb-5 lg:px-6">
           <SiteHeader />
           <main className="flex flex-col gap-4">{children}</main>
         </div>
         <SiteFooter />
+        <ScrollReveal />
         <StructuredData />
         <Script
           src="https://api.arrowleafmarketing.com/js/form_embed.js"

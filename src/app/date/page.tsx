@@ -41,7 +41,7 @@ export default function DatePage() {
     <>
       <section className="bg-[var(--background)] px-6 py-14 sm:px-10 lg:px-16 lg:py-16">
         <div className="mx-auto max-w-[1220px]">
-          <h1 className="text-center text-[clamp(2.8rem,4.4vw,4.25rem)] font-light tracking-[-0.05em] text-[#111111]">
+          <h1 className="text-center text-[clamp(2rem,4.4vw,4.25rem)] font-light tracking-[-0.05em] text-[#111111]">
             Date Night: Upgraded
           </h1>
 

@@ -67,7 +67,7 @@ export default async function BlogPage() {
                     />
                   </div>
 
-                  <div className="flex flex-1 flex-col px-7 py-7">
+                  <div className="flex flex-1 flex-col px-6 py-6 sm:px-7 sm:py-7">
                     <div className="flex items-center gap-3 text-[0.9rem] tracking-[-0.02em] text-[#8a8a84]">
                       {post.categoryLabel ? (
                         <span className="font-display inline-flex items-center rounded-full border border-[#9ec29e] bg-accent-green px-3 py-1 text-[0.82rem] font-normal text-[#1f231f]">
