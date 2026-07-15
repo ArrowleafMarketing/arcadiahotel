@@ -9,8 +9,8 @@ const navItems = [
   { label: "About", href: "/about" },
   { label: "Rooms", href: "/rooms" },
   { label: "Private Events", href: "/private-events" },
-  { label: "Neighborhood", href: "/neighborhood-partners" },
   { label: "Promotions", href: "/date" },
+  { label: "Neighborhood Partners", href: "/neighborhood-partners" },
   { label: "Blog", href: "/blog" },
 ];
 
@@ -21,8 +21,16 @@ export function SiteHeader() {
   return (
     <>
       <header className="flex items-center justify-between gap-3 px-1 py-1 lg:gap-6">
-        <a href="/" className="relative block h-[42px] w-[132px] shrink-0 max-[360px]:w-[116px] lg:h-[64px] lg:w-[200px]">
-          <Image src="/assets/logo_1.png" alt="Arcadia Hotel" fill className="object-contain object-left" />
+        <a
+          href="/"
+          className="relative block h-[42px] w-[132px] shrink-0 max-[360px]:w-[116px] lg:h-[64px] lg:w-[200px]"
+        >
+          <Image
+            src="/assets/logo_1.png"
+            alt="Arcadia Hotel"
+            fill
+            className="object-contain object-left"
+          />
         </a>
 
         <nav className="hidden items-center gap-7 text-[15px] font-normal text-[#6b6a66] lg:flex xl:gap-12">
@@ -57,9 +65,15 @@ export function SiteHeader() {
             onClick={() => setOpen((v) => !v)}
             className="flex h-11 w-11 flex-col items-center justify-center gap-[6px] lg:hidden"
           >
-            <span className={`block h-[2px] w-[22px] bg-black transition-all duration-200 ${open ? "translate-y-[8px] rotate-45" : ""}`} />
-            <span className={`block h-[2px] w-[22px] bg-black transition-all duration-200 ${open ? "opacity-0" : ""}`} />
-            <span className={`block h-[2px] w-[22px] bg-black transition-all duration-200 ${open ? "-translate-y-[8px] -rotate-45" : ""}`} />
+            <span
+              className={`block h-[2px] w-[22px] bg-black transition-all duration-200 ${open ? "translate-y-[8px] rotate-45" : ""}`}
+            />
+            <span
+              className={`block h-[2px] w-[22px] bg-black transition-all duration-200 ${open ? "opacity-0" : ""}`}
+            />
+            <span
+              className={`block h-[2px] w-[22px] bg-black transition-all duration-200 ${open ? "-translate-y-[8px] -rotate-45" : ""}`}
+            />
           </button>
         </div>
       </header>

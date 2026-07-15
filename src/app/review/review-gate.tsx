@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRightIcon } from "@/components/social-icons";
 import { GOOGLE_REVIEW_URL } from "@/lib/site";
@@ -9,6 +9,16 @@ type Step = "choice" | "form" | "done";
 
 export function ReviewGate() {
   const [step, setStep] = useState<Step>("choice");
+
+  // The gate is a full-screen lightbox, so keep the page behind it from
+  // scrolling while it's open. Restored on unmount (e.g. "Back to Arcadia").
+  useEffect(() => {
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, []);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -21,18 +31,37 @@ export function ReviewGate() {
   }
 
   return (
-    <section className="bg-[var(--background)] px-6 py-14 sm:px-10 lg:px-16 lg:py-20">
-      <div className="mx-auto w-full max-w-[620px]">
-        {step === "choice" && <ChoiceStep onNegative={() => setStep("form")} />}
-        {step === "form" && (
-          <FeedbackForm
-            onBack={() => setStep("choice")}
-            onSubmit={handleSubmit}
-          />
-        )}
-        {step === "done" && <ThankYou />}
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="How was your stay?"
+      className="fixed inset-0 z-[100] overflow-y-auto overscroll-contain bg-black/70 backdrop-blur-sm"
+    >
+      {/* Dismiss → back to the site. Pinned regardless of card scroll. */}
+      <Link
+        href="/"
+        aria-label="Close and return to Arcadia"
+        className="fixed right-4 top-4 z-[110] flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20 sm:right-6 sm:top-6"
+      >
+        <CloseIcon className="h-5 w-5" />
+      </Link>
+
+      {/* Centers the card when it fits; scrolls with padding when it doesn't. */}
+      <div className="flex min-h-full items-center justify-center px-4 py-14 sm:px-6">
+        <div className="w-full max-w-[620px]">
+          {step === "choice" && (
+            <ChoiceStep onNegative={() => setStep("form")} />
+          )}
+          {step === "form" && (
+            <FeedbackForm
+              onBack={() => setStep("choice")}
+              onSubmit={handleSubmit}
+            />
+          )}
+          {step === "done" && <ThankYou />}
+        </div>
       </div>
-    </section>
+    </div>
   );
 }
 
@@ -265,6 +294,22 @@ function ChatIcon({ className }: { className?: string }) {
     >
       <path d="M20 15a2 2 0 0 1-2 2H8l-4 4V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9Z" />
       <path d="M9 9.5h6M9 12.5h4" />
+    </svg>
+  );
+}
+
+function CloseIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M6 6l12 12M18 6L6 18" />
     </svg>
   );
 }
