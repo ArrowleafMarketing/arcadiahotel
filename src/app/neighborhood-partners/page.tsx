@@ -174,7 +174,7 @@ export default function NeighborhoodPartnersPage() {
         <div className="mx-auto grid max-w-[1220px] gap-12 lg:grid-cols-[1.05fr_1fr] lg:items-center">
           <div className="relative min-h-[340px] w-full overflow-hidden rounded-[18px] shadow-[0_8px_30px_rgba(0,0,0,0.06)] lg:min-h-[460px]">
             <Image
-              src="/assets/friends-toasting-with-drinks-at-picnic-JSQD9QZ.jpg"
+              src="/assets/arcadia_34.jpg"
               alt="Friends toasting drinks together outdoors"
               fill
               sizes="(min-width: 1024px) 560px, 100vw"
