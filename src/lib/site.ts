@@ -64,3 +64,8 @@ export const SOCIALS = {
 
 // Booking link used across the site
 export const BOOKING_URL = "https://booking.stayarcadia.com/";
+
+// Google "write a review" deep link from the Business Profile. Used by the
+// QR-code review gate at /review to send happy guests straight to Google.
+export const GOOGLE_REVIEW_URL =
+  "https://search.google.com/local/writereview?placeid=ChIJFWR8Pbr4rlQRT3SlNiJbuuc";

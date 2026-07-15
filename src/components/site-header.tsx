@@ -9,6 +9,7 @@ const navItems = [
   { label: "About", href: "/about" },
   { label: "Rooms", href: "/rooms" },
   { label: "Private Events", href: "/private-events" },
+  { label: "Neighborhood", href: "/neighborhood-partners" },
   { label: "Promotions", href: "/date" },
   { label: "Blog", href: "/blog" },
 ];
@@ -24,7 +25,7 @@ export function SiteHeader() {
           <Image src="/assets/logo_1.png" alt="Arcadia Hotel" fill className="object-contain object-left" />
         </a>
 
-        <nav className="hidden items-center gap-12 text-[15px] font-normal text-[#6b6a66] lg:flex">
+        <nav className="hidden items-center gap-7 text-[15px] font-normal text-[#6b6a66] lg:flex xl:gap-12">
           {navItems.map((item) => {
             const isActive = currentPath === item.href;
             return (
