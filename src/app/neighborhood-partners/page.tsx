@@ -404,7 +404,7 @@ export default function NeighborhoodPartnersPage() {
             <div className="flex justify-center lg:justify-end">
               <div className="relative aspect-[0.82/1] w-full max-w-[320px] overflow-hidden rounded-[20px] shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
                 <Image
-                  src="/assets/arcadia_6.jpg"
+                  src="/assets/arcadia_35.jpg"
                   alt="Guests outside Arcadia Hotel in Garden City"
                   fill
                   sizes="(min-width: 1024px) 320px, 100vw"
