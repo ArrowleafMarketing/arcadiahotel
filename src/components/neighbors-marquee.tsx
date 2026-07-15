@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { ArrowRightIcon } from "@/components/social-icons";
 
 const partners = [
   { src: "/assets/partner_1.png", alt: "Western Collective", href: "https://www.westerncollective.beer/" },
@@ -106,6 +107,15 @@ export function NeighborsMarquee() {
               </a>
             ))}
           </div>
+        </div>
+
+        <div className="mt-10 flex justify-center">
+          <a href="/neighborhood-partners" className="btn btn-green">
+            See The Deals
+            <span className="btn-arrow">
+              <ArrowRightIcon className="h-4 w-4" />
+            </span>
+          </a>
         </div>
       </div>
     </section>
