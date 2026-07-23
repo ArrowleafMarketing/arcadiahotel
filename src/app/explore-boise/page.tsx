@@ -11,7 +11,7 @@ export const metadata: Metadata = pageMeta({
   description:
     "Explore Boise & Garden City — stories, tips, and local favorites from the Arcadia Hotel team. Discover the best things to do, eat, and see near Boise, Idaho.",
   path: "/explore-boise",
-  image: "/assets/arcadia_2.jpg",
+  image: "/assets/arcadia_37.jpg",
   imageAlt: "Explore Boise with the Arcadia Hotel",
 });
 

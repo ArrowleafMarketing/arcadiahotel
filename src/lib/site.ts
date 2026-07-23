@@ -12,7 +12,7 @@ export const SITE_DESCRIPTION =
 
 // Default social share image (1200x630). Absolute URL resolved via metadataBase.
 export const OG_IMAGE = {
-  url: "/og-image.jpg",
+  url: "/assets/arcadia_36.jpg",
   width: 1200,
   height: 630,
   alt: "Arcadia Hotel — a boutique contactless hotel in Garden City, Idaho",

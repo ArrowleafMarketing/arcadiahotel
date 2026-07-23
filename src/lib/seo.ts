@@ -19,6 +19,13 @@ type PageMetaInput = {
   /** Optional override share image (root-relative or absolute). */
   image?: string;
   imageAlt?: string;
+  /**
+   * Real pixel dimensions of the override image. Only declared when BOTH are
+   * given — never hard-code them, or an off-ratio image gets cropped/letterboxed
+   * by Facebook/LinkedIn/iMessage. Omit and platforms detect the true size.
+   */
+  imageWidth?: number;
+  imageHeight?: number;
   /** og:type — "website" for most pages, "article" for posts. */
   type?: "website" | "article";
   /** Set true for utility pages that shouldn't rank (e.g. thank-you pages). */
@@ -31,12 +38,22 @@ export function pageMeta({
   path,
   image,
   imageAlt,
+  imageWidth,
+  imageHeight,
   type = "website",
   noindex = false,
 }: PageMetaInput): Metadata {
   const canonical = path;
   const images = image
-    ? [{ url: image, alt: imageAlt ?? title, width: 1200, height: 630 }]
+    ? [
+        {
+          url: image,
+          alt: imageAlt ?? title,
+          ...(imageWidth && imageHeight
+            ? { width: imageWidth, height: imageHeight }
+            : {}),
+        },
+      ]
     : [OG_IMAGE];
 
   return {
