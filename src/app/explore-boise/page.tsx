@@ -7,7 +7,7 @@ import { pageMeta } from "@/lib/seo";
 import { ArrowRightIcon } from "@/components/social-icons";
 
 export const metadata: Metadata = pageMeta({
-  title: "Explore Boise",
+  title: "Explore Boise | Local Guide & Stories | Arcadia Hotel",
   description:
     "Explore Boise & Garden City — stories, tips, and local favorites from the Arcadia Hotel team. Discover the best things to do, eat, and see near Boise, Idaho.",
   path: "/explore-boise",
