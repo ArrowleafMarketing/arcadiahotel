@@ -18,8 +18,8 @@ export const OG_IMAGE = {
   alt: "Arcadia Hotel — a boutique contactless hotel in Garden City, Idaho",
 } as const;
 
-export const BLOG_PAGENAME = "blog";
-export const BLOG_PAGELABEL = "Blog";
+export const BLOG_PAGENAME = "explore-boise";
+export const BLOG_PAGELABEL = "Explore Boise";
 export const blogPostPath = (slug: string) => `/${BLOG_PAGENAME}/${slug}`;
 
 // Physical location — used for the LocalBusiness / Hotel structured data.

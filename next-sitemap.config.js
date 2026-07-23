@@ -28,8 +28,8 @@ module.exports = {
     if (path === '/') {
       priority = 1.0;         // homepage = highest priority
       changefreq = 'daily';
-    } else if (path.startsWith('/blog')) {
-      priority = 0.9;         // blog index/posts = high priority
+    } else if (path.startsWith('/explore-boise')) {
+      priority = 0.9;         // Explore Boise index/posts = high priority
       changefreq = 'daily';
     } else if (
       path === '/about' ||

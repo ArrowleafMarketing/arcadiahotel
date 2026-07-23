@@ -11,7 +11,7 @@ const navItems = [
   { label: "Private Events", href: "/private-events" },
   { label: "Promotions", href: "/date" },
   { label: "Neighborhood Partners", href: "/neighborhood-partners" },
-  { label: "Blog", href: "/blog" },
+  { label: "Explore Boise", href: "/explore-boise" },
 ];
 
 export function SiteHeader() {

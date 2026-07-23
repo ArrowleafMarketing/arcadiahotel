@@ -7,12 +7,12 @@ import { pageMeta } from "@/lib/seo";
 import { ArrowRightIcon } from "@/components/social-icons";
 
 export const metadata: Metadata = pageMeta({
-  title: "Blog",
+  title: "Explore Boise",
   description:
-    "Your Garden City guide — stories, tips, and local favorites from the Arcadia Hotel team. Discover the best things to do near Boise, Idaho.",
-  path: "/blog",
+    "Explore Boise & Garden City — stories, tips, and local favorites from the Arcadia Hotel team. Discover the best things to do, eat, and see near Boise, Idaho.",
+  path: "/explore-boise",
   image: "/assets/arcadia_2.jpg",
-  imageAlt: "The Arcadia Hotel Garden City guide",
+  imageAlt: "Explore Boise with the Arcadia Hotel",
 });
 
 export const revalidate = 60;
@@ -35,14 +35,14 @@ export default async function BlogPage() {
 
         <div className="relative z-10 flex min-h-[402px] flex-col items-center justify-center px-6 py-14 text-center text-white">
           <h1 className="text-[clamp(2.4rem,3.6vw,3.6rem)] font-light tracking-[-0.055em] text-white">
-            Your Garden City Guide
+            Explore Boise
           </h1>
           <div className="mt-5 flex items-center gap-4 text-[1.18rem] tracking-[-0.025em] text-white/82">
             <Link href="/" className="hover:text-white">
               Home
             </Link>
             <span aria-hidden="true">→</span>
-            <span>Blog</span>
+            <span>Explore Boise</span>
           </div>
         </div>
       </section>
