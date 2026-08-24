@@ -10,20 +10,19 @@ import { BOOKING_URL } from "@/lib/site";
    CAMPAIGN_END, so nothing has to be torn out by hand afterward. To reuse this
    for the next campaign, change the constants below.
 
-   Two showings per session, each at most once:
+   Two showings on every page view, each at most once per view:
      "timed" — 5s after landing, on a plain dark lightbox. An early, low-key
                nudge, so it stays visually quiet.
      "exit"  — on exit intent, on the full fair-night backdrop. The last-chance
                pitch, so it gets the loud treatment.
-   Booking suppresses both for the rest of the session. */
+   Nothing persists across page views: navigating to another page starts both
+   triggers over. */
 
 type Variant = "timed" | "exit";
 
 const PROMO_CODE = "FAIR2026";
 const CAMPAIGN_START = new Date(2026, 7, 10); // Aug 10, 2026, local time
 const CAMPAIGN_END = new Date(2026, 7, 30, 23, 59, 59); // through Aug 30
-const STORAGE_KEY = "arcadia:fair2026-popup";
-const CONVERTED = "done";
 
 // Don't stack the promo on top of the /review lightbox — that page is already
 // a full-screen dialog and a second one over it reads as broken.
@@ -33,33 +32,13 @@ const TIMED_DELAY_MS = 5000;
 // Grace period before exit-intent is armed, so a stray cursor flick on arrival
 // doesn't trigger it.
 const ARM_DELAY_MS = 5000;
-// Breathing room after any dismissal, so closing the timed popup and drifting
-// toward the tab bar doesn't immediately summon the second one.
+// Breathing room after any dismissal, so closing one popup and drifting toward
+// the tab bar — or clicking straight through to the next page — doesn't
+// immediately summon the next one.
 const REARM_DELAY_MS = 15000;
 // Touch devices have no exit-intent signal; fall back to dwell + scroll depth.
 const TOUCH_DWELL_MS = 25000;
 const TOUCH_SCROLL_DEPTH = 0.35;
-
-function readSeen(): Set<string> {
-  try {
-    return new Set(
-      (sessionStorage.getItem(STORAGE_KEY) ?? "").split(",").filter(Boolean),
-    );
-  } catch {
-    // Private browsing / storage disabled — the popup just may show again.
-    return new Set();
-  }
-}
-
-function markSeen(entry: string) {
-  const seen = readSeen();
-  seen.add(entry);
-  try {
-    sessionStorage.setItem(STORAGE_KEY, [...seen].join(","));
-  } catch {
-    // See readSeen.
-  }
-}
 
 export function FairPopup() {
   const pathname = usePathname();
@@ -69,24 +48,20 @@ export function FairPopup() {
   // (and tearing down its listeners) every time the popup opens or closes.
   const variantRef = useRef<Variant | null>(null);
   const rearmAtRef = useRef(0);
+  // Which variants have already had their turn on the current page view.
+  const shownRef = useRef<Set<Variant>>(new Set());
 
   const show = useCallback((next: Variant) => {
     variantRef.current = next;
+    shownRef.current.add(next);
     setVariant(next);
   }, []);
 
   const close = useCallback(() => {
-    if (variantRef.current) markSeen(variantRef.current);
     variantRef.current = null;
     rearmAtRef.current = Date.now() + REARM_DELAY_MS;
     setVariant(null);
   }, []);
-
-  // CTA click — they're on their way to book, so don't pitch them again.
-  const convert = useCallback(() => {
-    markSeen(CONVERTED);
-    close();
-  }, [close]);
 
   useEffect(() => {
     if (EXCLUDED_PATHS.includes(pathname)) return;
@@ -94,25 +69,29 @@ export function FairPopup() {
     const now = new Date();
     if (now < CAMPAIGN_START || now > CAMPAIGN_END) return;
 
-    const seen = readSeen();
-    if (seen.has(CONVERTED)) return;
+    // A new page view — both triggers get a fresh turn.
+    shownRef.current = new Set();
 
     const timers: number[] = [];
 
-    // Only fire a trigger when nothing is already on screen and the post-
-    // dismissal cooldown has elapsed.
-    const canShow = () =>
-      variantRef.current === null && Date.now() >= rearmAtRef.current;
+    // Only fire a trigger when it hasn't already had its turn on this page,
+    // nothing is on screen, and the post-dismissal cooldown has elapsed.
+    const canShow = (next: Variant) =>
+      !shownRef.current.has(next) &&
+      variantRef.current === null &&
+      Date.now() >= rearmAtRef.current;
 
-    if (!seen.has("timed")) {
-      timers.push(
-        window.setTimeout(() => {
-          if (canShow()) show("timed");
-        }, TIMED_DELAY_MS),
-      );
-    }
-
-    if (seen.has("exit")) return () => timers.forEach(window.clearTimeout);
+    // Wait out any cooldown carried over from the previous page rather than
+    // firing into it and forfeiting this page's timed showing.
+    const timedDelay = Math.max(
+      TIMED_DELAY_MS,
+      rearmAtRef.current - Date.now(),
+    );
+    timers.push(
+      window.setTimeout(() => {
+        if (canShow("timed")) show("timed");
+      }, timedDelay),
+    );
 
     let armed = false;
     timers.push(
@@ -124,7 +103,7 @@ export function FairPopup() {
     // Desktop: cursor leaves through the top of the viewport toward the tab
     // bar / address bar. relatedTarget is null only when it left the document.
     const handleMouseOut = (event: MouseEvent) => {
-      if (!armed || !canShow()) return;
+      if (!armed || !canShow("exit")) return;
       if (event.clientY > 0 || event.relatedTarget) return;
       show("exit");
     };
@@ -138,7 +117,7 @@ export function FairPopup() {
     );
 
     const handleScroll = () => {
-      if (!dwellReached || !canShow()) return;
+      if (!dwellReached || !canShow("exit")) return;
       const scrollable =
         document.documentElement.scrollHeight - window.innerHeight;
       if (scrollable <= 0) return;
@@ -242,7 +221,7 @@ export function FairPopup() {
         <div className="mt-8 flex flex-col items-center gap-4">
           <a
             href={BOOKING_URL}
-            onClick={convert}
+            onClick={close}
             className="btn btn-dark w-full sm:w-auto"
           >
             <span>Book with code {PROMO_CODE}</span>
