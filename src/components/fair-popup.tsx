@@ -1,43 +1,92 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { ArrowRightIcon } from "@/components/social-icons";
 import { BOOKING_URL } from "@/lib/site";
 
 /* Western Idaho Fair — FAIR2026.
-   Exit-intent promo shown site-wide for the run of the campaign. It self-
-   expires on CAMPAIGN_END, so nothing has to be torn out by hand afterward.
-   To reuse this for the next campaign, change the constants below. */
+   Site-wide promo for the run of the campaign. It self-expires on
+   CAMPAIGN_END, so nothing has to be torn out by hand afterward. To reuse this
+   for the next campaign, change the constants below.
+
+   Two showings per session, each at most once:
+     "timed" — 5s after landing, on a plain dark lightbox. An early, low-key
+               nudge, so it stays visually quiet.
+     "exit"  — on exit intent, on the full fair-night backdrop. The last-chance
+               pitch, so it gets the loud treatment.
+   Booking suppresses both for the rest of the session. */
+
+type Variant = "timed" | "exit";
 
 const PROMO_CODE = "FAIR2026";
 const CAMPAIGN_START = new Date(2026, 7, 10); // Aug 10, 2026, local time
 const CAMPAIGN_END = new Date(2026, 7, 30, 23, 59, 59); // through Aug 30
 const STORAGE_KEY = "arcadia:fair2026-popup";
+const CONVERTED = "done";
 
 // Don't stack the promo on top of the /review lightbox — that page is already
 // a full-screen dialog and a second one over it reads as broken.
 const EXCLUDED_PATHS = ["/review"];
 
+const TIMED_DELAY_MS = 5000;
 // Grace period before exit-intent is armed, so a stray cursor flick on arrival
 // doesn't trigger it.
 const ARM_DELAY_MS = 5000;
+// Breathing room after any dismissal, so closing the timed popup and drifting
+// toward the tab bar doesn't immediately summon the second one.
+const REARM_DELAY_MS = 15000;
 // Touch devices have no exit-intent signal; fall back to dwell + scroll depth.
 const TOUCH_DWELL_MS = 25000;
 const TOUCH_SCROLL_DEPTH = 0.35;
 
+function readSeen(): Set<string> {
+  try {
+    return new Set(
+      (sessionStorage.getItem(STORAGE_KEY) ?? "").split(",").filter(Boolean),
+    );
+  } catch {
+    // Private browsing / storage disabled — the popup just may show again.
+    return new Set();
+  }
+}
+
+function markSeen(entry: string) {
+  const seen = readSeen();
+  seen.add(entry);
+  try {
+    sessionStorage.setItem(STORAGE_KEY, [...seen].join(","));
+  } catch {
+    // See readSeen.
+  }
+}
+
 export function FairPopup() {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
+  const [variant, setVariant] = useState<Variant | null>(null);
+
+  // Mirrored in refs so the trigger effect can read them without re-running
+  // (and tearing down its listeners) every time the popup opens or closes.
+  const variantRef = useRef<Variant | null>(null);
+  const rearmAtRef = useRef(0);
+
+  const show = useCallback((next: Variant) => {
+    variantRef.current = next;
+    setVariant(next);
+  }, []);
 
   const close = useCallback(() => {
-    setOpen(false);
-    try {
-      sessionStorage.setItem(STORAGE_KEY, "seen");
-    } catch {
-      // Private browsing / storage disabled — the popup just may show again.
-    }
+    if (variantRef.current) markSeen(variantRef.current);
+    variantRef.current = null;
+    rearmAtRef.current = Date.now() + REARM_DELAY_MS;
+    setVariant(null);
   }, []);
+
+  // CTA click — they're on their way to book, so don't pitch them again.
+  const convert = useCallback(() => {
+    markSeen(CONVERTED);
+    close();
+  }, [close]);
 
   useEffect(() => {
     if (EXCLUDED_PATHS.includes(pathname)) return;
@@ -45,37 +94,55 @@ export function FairPopup() {
     const now = new Date();
     if (now < CAMPAIGN_START || now > CAMPAIGN_END) return;
 
-    try {
-      if (sessionStorage.getItem(STORAGE_KEY)) return;
-    } catch {
-      // Storage unavailable — fall through and show it.
+    const seen = readSeen();
+    if (seen.has(CONVERTED)) return;
+
+    const timers: number[] = [];
+
+    // Only fire a trigger when nothing is already on screen and the post-
+    // dismissal cooldown has elapsed.
+    const canShow = () =>
+      variantRef.current === null && Date.now() >= rearmAtRef.current;
+
+    if (!seen.has("timed")) {
+      timers.push(
+        window.setTimeout(() => {
+          if (canShow()) show("timed");
+        }, TIMED_DELAY_MS),
+      );
     }
 
+    if (seen.has("exit")) return () => timers.forEach(window.clearTimeout);
+
     let armed = false;
-    const armTimer = window.setTimeout(() => {
-      armed = true;
-    }, ARM_DELAY_MS);
+    timers.push(
+      window.setTimeout(() => {
+        armed = true;
+      }, ARM_DELAY_MS),
+    );
 
     // Desktop: cursor leaves through the top of the viewport toward the tab
     // bar / address bar. relatedTarget is null only when it left the document.
     const handleMouseOut = (event: MouseEvent) => {
-      if (!armed) return;
+      if (!armed || !canShow()) return;
       if (event.clientY > 0 || event.relatedTarget) return;
-      setOpen(true);
+      show("exit");
     };
 
     // Touch: no exit signal exists, so use engaged-then-idle as the proxy.
     let dwellReached = false;
-    const dwellTimer = window.setTimeout(() => {
-      dwellReached = true;
-    }, TOUCH_DWELL_MS);
+    timers.push(
+      window.setTimeout(() => {
+        dwellReached = true;
+      }, TOUCH_DWELL_MS),
+    );
 
     const handleScroll = () => {
-      if (!dwellReached) return;
+      if (!dwellReached || !canShow()) return;
       const scrollable =
         document.documentElement.scrollHeight - window.innerHeight;
       if (scrollable <= 0) return;
-      if (window.scrollY / scrollable >= TOUCH_SCROLL_DEPTH) setOpen(true);
+      if (window.scrollY / scrollable >= TOUCH_SCROLL_DEPTH) show("exit");
     };
 
     const isTouch = window.matchMedia("(hover: none)").matches;
@@ -86,16 +153,15 @@ export function FairPopup() {
     }
 
     return () => {
-      window.clearTimeout(armTimer);
-      window.clearTimeout(dwellTimer);
+      timers.forEach(window.clearTimeout);
       window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("mouseout", handleMouseOut);
     };
-  }, [pathname]);
+  }, [pathname, show]);
 
   // Lock the page behind the dialog and wire up Escape while it's open.
   useEffect(() => {
-    if (!open) return;
+    if (!variant) return;
 
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -109,9 +175,9 @@ export function FairPopup() {
       document.body.style.overflow = previous;
       document.removeEventListener("keydown", handleKey);
     };
-  }, [open, close]);
+  }, [variant, close]);
 
-  if (!open) return null;
+  if (!variant) return null;
 
   return (
     <div
@@ -120,17 +186,24 @@ export function FairPopup() {
       aria-labelledby="fair-popup-title"
       className="fixed inset-0 z-[120] flex items-center justify-center px-4 py-8 sm:px-6"
     >
-      {/* Backdrop: a warm fair-night sky under a light blur. Clicking it
-          dismisses, so it's a button for keyboard/AT users too. */}
+      {/* Backdrop. Clicking it dismisses, so it's a button for keyboard/AT
+          users too. The timed showing gets a plain lightbox; exit intent gets
+          the full fair-night sky under a light blur. */}
       <button
         type="button"
         aria-label="Close"
         onClick={close}
         className="absolute inset-0 cursor-default"
       >
-        <span className="absolute inset-0 bg-[#2a1608]" />
-        <FairLights />
-        <span className="absolute inset-0 bg-black/25 backdrop-blur-[3px]" />
+        {variant === "exit" ? (
+          <>
+            <span className="absolute inset-0 bg-[#2a1608]" />
+            <FairLights />
+            <span className="absolute inset-0 bg-black/25 backdrop-blur-[3px]" />
+          </>
+        ) : (
+          <span className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+        )}
       </button>
 
       <div className="fair-popup-card relative w-full max-w-[560px] overflow-hidden rounded-[24px] bg-[#faf9f5] px-6 py-10 text-center shadow-[0_24px_60px_rgba(0,0,0,0.35)] sm:px-12 sm:py-12">
@@ -169,7 +242,7 @@ export function FairPopup() {
         <div className="mt-8 flex flex-col items-center gap-4">
           <a
             href={BOOKING_URL}
-            onClick={close}
+            onClick={convert}
             className="btn btn-dark w-full sm:w-auto"
           >
             <span>Book with code {PROMO_CODE}</span>
