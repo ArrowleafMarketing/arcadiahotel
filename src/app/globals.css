@@ -201,10 +201,10 @@ h6 {
   }
 }
 
-/* Promo popup (FairPopup): the card lifts in, the fair bulbs breathe. Both are
+/* Promo popup: the card lifts in, the backdrop lights breathe. Both are
    motion-optional — with reduced motion the popup simply appears, lit and
    steady. */
-@keyframes fair-popup-in {
+@keyframes promo-popup-in {
   from {
     opacity: 0;
     transform: translateY(14px) scale(0.985);
@@ -216,7 +216,7 @@ h6 {
   }
 }
 
-@keyframes fair-twinkle {
+@keyframes promo-glow {
   0%,
   100% {
     transform: scale(1);
@@ -230,12 +230,12 @@ h6 {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .fair-popup-card {
-    animation: fair-popup-in 0.42s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  .promo-popup-card {
+    animation: promo-popup-in 0.42s cubic-bezier(0.22, 0.61, 0.36, 1) both;
   }
 
-  .fair-bokeh {
-    animation: fair-twinkle 5.5s ease-in-out infinite;
+  .promo-bokeh {
+    animation: promo-glow 5.5s ease-in-out infinite;
   }
 }
 
