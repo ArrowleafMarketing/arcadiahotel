@@ -7,13 +7,9 @@
 // Keep the list in chronological order. Windows shouldn't overlap; if two ever
 // do, the earlier entry wins.
 
-export type PromoScene = "park" | "street";
-
-/** What sits behind the card on the exit-intent showing: a real photo when we
- *  have one cleared for use, otherwise a drawn scene. */
-export type PromoBackdrop =
-  | { kind: "photo"; src: string; alt: string }
-  | { kind: "scene"; scene: PromoScene };
+/** Banner photo across the top of the card. Optional — a campaign without one
+ *  renders as a text-only card. */
+export type PromoImage = { src: string; alt: string };
 
 export type Promo = {
   /** Stable slug. Namespaces the once-per-session flag and the preview link. */
@@ -27,7 +23,7 @@ export type Promo = {
   headline: string;
   subtext: string;
   cta: string;
-  backdrop: PromoBackdrop;
+  image?: PromoImage;
   /** Exact pathnames the popup may appear on. */
   paths: string[];
 };
@@ -44,8 +40,7 @@ export const PROMOS: Promo[] = [
     subtext:
       "Julia Davis Park fills with local artists Sep 11–13 — book your weekend and get a complimentary artist print with your stay.",
     cta: "Book Now",
-    backdrop: {
-      kind: "photo",
+    image: {
       src: "/assets/art-in-the-park.jpg",
       alt: "Crowds browsing artist tents under the trees at Art in the Park",
     },
@@ -61,9 +56,8 @@ export const PROMOS: Promo[] = [
     subtext:
       "North End makers, food, and live music Sep 18–20 — book your weekend and get a neighborhood walking map.",
     cta: "Book Now",
-    // No cleared photo for this one yet — swap in { kind: "photo", ... } when
-    // there is one, the same way Art in the Park does.
-    backdrop: { kind: "scene", scene: "street" },
+    // No photo for this one yet — add an `image` the way Art in the Park does
+    // and the banner appears; without one the card is text-only.
     paths: ["/", "/book"],
   },
 ];
