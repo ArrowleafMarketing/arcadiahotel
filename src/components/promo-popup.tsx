@@ -153,7 +153,7 @@ export function PromoPopup() {
         {variant === "exit" ? (
           <>
             <span className="absolute inset-0 bg-[#12121f]" />
-            <PromoBackdrop scene={promo.scene} />
+            <PromoBackdrop backdrop={promo.backdrop} />
             <span className="absolute inset-0 bg-black/25 backdrop-blur-[3px]" />
           </>
         ) : (

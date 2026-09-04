@@ -1,14 +1,44 @@
-import type { PromoScene } from "@/lib/promos";
+import Image from "next/image";
+import type { PromoBackdrop as PromoBackdropSpec } from "@/lib/promos";
 
 /* Backdrops for the exit-intent showing of the promo popup.
 
-   Each scene is pure CSS/SVG rather than photography — nothing to license and
-   nothing extra to download — and everything is softened so the off-white card
-   stays the focal point. Every SVG scales uniformly off its own width, so the
-   artwork never skews on narrow screens. */
+   A campaign either supplies a photo or falls back to a drawn scene. The drawn
+   scenes are pure CSS/SVG — nothing to license and nothing extra to download —
+   and every SVG scales uniformly off its own width, so the artwork never skews
+   on narrow screens. Either way the backdrop is blurred and dimmed so the
+   off-white card stays the focal point. */
 
-export function PromoBackdrop({ scene }: { scene: PromoScene }) {
-  return scene === "street" ? <StreetScene /> : <ParkScene />;
+export function PromoBackdrop({ backdrop }: { backdrop: PromoBackdropSpec }) {
+  if (backdrop.kind === "photo") {
+    return <PhotoScene src={backdrop.src} />;
+  }
+  return backdrop.scene === "street" ? <StreetScene /> : <ParkScene />;
+}
+
+/* The photo is decoration behind a dialog that carries its own text, so it's
+   hidden from assistive tech rather than announced. Scaled up slightly so the
+   blur doesn't bleed a soft edge in from the sides. */
+function PhotoScene({ src }: { src: string }) {
+  return (
+    <span aria-hidden="true" className="absolute inset-0 overflow-hidden">
+      {/* The photo isn't fetched until the popup opens, so hold a shade taken
+          from its own shadows underneath. A visitor on a slow connection sees
+          dim green park rather than a flash of near-black. */}
+      <span className="absolute inset-0 bg-[#3d4a2e]" />
+
+      {/* The source is capped at 1200px wide and blurred on top of that, so
+          there's nothing to gain from Next requesting larger variants. */}
+      <Image
+        src={src}
+        alt=""
+        fill
+        sizes="1200px"
+        className="scale-110 object-cover blur-[3px]"
+      />
+      <span className="absolute inset-0 bg-[#14261c]/55" />
+    </span>
+  );
 }
 
 /* ---------- Shared ---------- */

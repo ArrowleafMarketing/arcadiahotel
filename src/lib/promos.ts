@@ -9,6 +9,12 @@
 
 export type PromoScene = "park" | "street";
 
+/** What sits behind the card on the exit-intent showing: a real photo when we
+ *  have one cleared for use, otherwise a drawn scene. */
+export type PromoBackdrop =
+  | { kind: "photo"; src: string; alt: string }
+  | { kind: "scene"; scene: PromoScene };
+
 export type Promo = {
   /** Stable slug. Namespaces the once-per-session flag and the preview link. */
   id: string;
@@ -21,7 +27,7 @@ export type Promo = {
   headline: string;
   subtext: string;
   cta: string;
-  scene: PromoScene;
+  backdrop: PromoBackdrop;
   /** Exact pathnames the popup may appear on. */
   paths: string[];
 };
@@ -38,7 +44,11 @@ export const PROMOS: Promo[] = [
     subtext:
       "Julia Davis Park fills with local artists Sep 11–13 — book your weekend and get a complimentary artist print with your stay.",
     cta: "Book Now",
-    scene: "park",
+    backdrop: {
+      kind: "photo",
+      src: "/assets/art-in-the-park.jpg",
+      alt: "Crowds browsing artist tents under the trees at Art in the Park",
+    },
     paths: ["/", "/book"],
   },
   {
@@ -51,7 +61,9 @@ export const PROMOS: Promo[] = [
     subtext:
       "North End makers, food, and live music Sep 18–20 — book your weekend and get a neighborhood walking map.",
     cta: "Book Now",
-    scene: "street",
+    // No cleared photo for this one yet — swap in { kind: "photo", ... } when
+    // there is one, the same way Art in the Park does.
+    backdrop: { kind: "scene", scene: "street" },
     paths: ["/", "/book"],
   },
 ];
