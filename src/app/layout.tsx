@@ -4,7 +4,7 @@ import Script from "next/script";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { ScrollReveal } from "@/components/scroll-reveal";
-import { ArtInParkPopup } from "@/components/art-in-park-popup";
+import { PromoPopup } from "@/components/promo-popup";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { StructuredData } from "@/components/seo/structured-data";
 import {
@@ -134,7 +134,7 @@ export default function RootLayout({
         </div>
         <SiteFooter />
         <ScrollReveal />
-        <ArtInParkPopup />
+        <PromoPopup />
         <StructuredData />
         <Script
           src="https://api.arrowleafmarketing.com/js/form_embed.js"
