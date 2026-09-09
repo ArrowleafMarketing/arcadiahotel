@@ -38,7 +38,7 @@ export const PROMOS: Promo[] = [
     eyebrow: "Art in the Park",
     headline: "10% Off Your Art in the Park Weekend",
     subtext:
-      "Julia Davis Park fills with local artists Sep 11–13 — book your weekend and get a complimentary artist print with your stay.",
+      "Julia Davis Park fills with local artists Sep 11–13 — book your weekend.",
     cta: "Book Now",
     image: {
       src: "/assets/art-in-the-park.jpg",
