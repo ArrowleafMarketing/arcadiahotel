@@ -17,7 +17,6 @@ export type FeedbackSubmission = {
   lastName: string;
   email: string;
   phone: string;
-  stayType: string;
   message: string;
   submittedAt: string;
 };
@@ -79,7 +78,6 @@ function feedbackText(submission: FeedbackSubmission): string {
     `Name:       ${fullName(submission)}`,
     `Email:      ${submission.email}`,
     `Phone:      ${submission.phone || "—"}`,
-    `Stay type:  ${submission.stayType || "—"}`,
     `Submitted:  ${submission.submittedAt}`,
     "",
     "What could we have done better?",
@@ -115,7 +113,6 @@ function feedbackHtml(submission: FeedbackSubmission): string {
     ${row("Name", fullName(submission))}
     ${row("Email", submission.email)}
     ${row("Phone", submission.phone)}
-    ${row("Stay type", submission.stayType)}
     ${row("Submitted", submission.submittedAt)}
   </table>
   <p style="margin:0 0 6px;font-size:13px;color:#8b8d92;">

@@ -5,7 +5,6 @@
 // because our env vars are missing. The response body reports what actually
 // happened via `delivery` so the state is visible in the network tab.
 import { deliverFeedback, type FeedbackSubmission } from "@/lib/review-feedback";
-import { STAY_TYPES } from "@/lib/site";
 
 /** Trim and cap, so a pasted essay can't blow up the email or the log. */
 function readField(value: unknown, maxLength: number): string {
@@ -28,7 +27,6 @@ export async function POST(request: Request) {
   const lastName = readField(payload.lastName, 100);
   const email = readField(payload.email, 200);
   const phone = readField(payload.phone, 40);
-  const stayType = readField(payload.stayType, 60);
   const message = readField(payload.message, 5000);
 
   const errors: string[] = [];
@@ -47,9 +45,6 @@ export async function POST(request: Request) {
     errors.push("A valid email is required.");
   }
   if (!message) errors.push("message is required.");
-  if (stayType && !STAY_TYPES.includes(stayType as (typeof STAY_TYPES)[number])) {
-    errors.push("stayType is not one of the offered options.");
-  }
 
   if (errors.length > 0) {
     return Response.json({ error: errors.join(" ") }, { status: 400 });
@@ -61,7 +56,6 @@ export async function POST(request: Request) {
     lastName,
     email,
     phone,
-    stayType,
     message,
     submittedAt: new Date().toISOString(),
   };

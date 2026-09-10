@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRightIcon } from "@/components/social-icons";
-import { CONTACT, GOOGLE_REVIEW_URL, STAY_TYPES } from "@/lib/site";
+import { CONTACT, GOOGLE_REVIEW_URL } from "@/lib/site";
 
 type Step = "rating" | "google" | "form" | "done";
 
@@ -269,7 +269,6 @@ function FeedbackForm({
           lastName: data.get("lastName"),
           email: data.get("email"),
           phone: data.get("phone"),
-          stayType: data.get("stayType"),
           message: data.get("message"),
         }),
       });
@@ -350,22 +349,6 @@ function FeedbackForm({
             />
           </Field>
         </div>
-
-        <Field label="Stay type (optional)" htmlFor="stayType">
-          <select
-            id="stayType"
-            name="stayType"
-            defaultValue=""
-            className={`${inputClass} appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%238b8d92%22 stroke-width=%222%22 stroke-linecap=%22round%22><path d=%22M6 9l6 6 6-6%22/></svg>')] bg-[length:18px_18px] bg-[right_1rem_center] bg-no-repeat pr-11`}
-          >
-            <option value="">Select one</option>
-            {STAY_TYPES.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
-        </Field>
 
         <Field label="What could we have done better?" htmlFor="message">
           <textarea

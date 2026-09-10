@@ -226,7 +226,7 @@ reliable check. The same applies to a rotated API key.
 | Star gate, both branches, form UI | [`src/app/leave-a-review/review-gate.tsx`](../src/app/leave-a-review/review-gate.tsx) |
 | Validation + response shape | [`src/app/api/review-feedback/route.ts`](../src/app/api/review-feedback/route.ts) |
 | Email/webhook delivery, subject, logging | [`src/lib/review-feedback.ts`](../src/lib/review-feedback.ts) |
-| `GOOGLE_REVIEW_URL`, `STAY_TYPES`, contact details | [`src/lib/site.ts`](../src/lib/site.ts) |
+| `GOOGLE_REVIEW_URL`, contact details | [`src/lib/site.ts`](../src/lib/site.ts) |
 | `/review` → `/leave-a-review` redirect | [`next.config.ts`](../next.config.ts) |
 | Sitemap exclusion | [`next-sitemap.config.js`](../next-sitemap.config.js) |
 
@@ -238,5 +238,3 @@ Notes for whoever picks this up next:
 - Only a **5-star** rating routes to Google. 1–4 stars go to the private form,
   and the 4-star copy is intentionally softer than the 1–3 star copy.
 - The API rejects a 5-star POST — that rating never uses the form.
-- **Stay type** options come from `STAY_TYPES` in `src/lib/site.ts`. Update that
-  list when the room lineup or packages change; the API validates against it.

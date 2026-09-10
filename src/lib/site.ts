@@ -70,15 +70,3 @@ export const BOOKING_URL = "https://booking.stayarcadia.com/";
 // Grab this from the Business Profile dashboard ("Ask for reviews" -> copy
 // link); it must be the /review deep link, not the listing URL.
 export const GOOGLE_REVIEW_URL = "https://g.page/r/CU90pTYiW7rnEBM/review";
-
-// Stay types offered on the site, reused by the review gate's feedback form so
-// the team knows which room or package the note is about. Mirrors /rooms plus
-// the two packages we sell (/private-events, /date).
-export const STAY_TYPES = [
-  "King Suite",
-  "Queen Room",
-  "Ground Floor Queen Room",
-  "Private Event",
-  "Date Night Package",
-  "Other",
-] as const;
