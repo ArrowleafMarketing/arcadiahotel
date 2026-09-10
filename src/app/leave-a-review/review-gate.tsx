@@ -176,35 +176,49 @@ function RatingStep({
 function GoogleStep({ onChangeRating }: { onChangeRating: () => void }) {
   return (
     <div className="rounded-[24px] bg-white px-6 py-10 text-center shadow-[0_8px_30px_rgba(0,0,0,0.06)] sm:px-12 sm:py-14">
-      <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-[#9ec29e] bg-[#bfd9bd]">
-        <StarIcon solid className="h-8 w-8 text-[#1f231f]" />
+      {/* Reflect the five stars back first, so the ask below reads as the other
+          half of what they already started rather than a fresh request. */}
+      <div className="flex items-center justify-center gap-1.5">
+        {[1, 2, 3, 4, 5].map((value) => (
+          <StarIcon key={value} filled className="h-7 w-7 sm:h-8 sm:w-8" />
+        ))}
       </div>
 
-      <h1 className="mt-7 text-[clamp(1.8rem,3.8vw,2.9rem)] font-light leading-[1.06] tracking-[-0.055em] text-[#111111]">
-        We&apos;re glad you had a good stay!
+      <span className="eyebrow mt-7">One Last Step</span>
+
+      <h1 className="mt-6 text-[clamp(1.8rem,3.8vw,2.9rem)] font-light leading-[1.06] tracking-[-0.055em] text-[#111111]">
+        Would you share it on Google?
       </h1>
-      <p className="mx-auto mt-5 max-w-[460px] text-[clamp(1.02rem,1.4vw,1.18rem)] leading-[1.7] tracking-[-0.025em] text-[#7a7b77]">
-        Reviews are how most people find us — and hearing it from a real guest
-        means far more than anything we could say about ourselves. If you have a
-        minute, we&apos;d be grateful for a few words.
+      <p className="mx-auto mt-5 max-w-[470px] text-[clamp(1.02rem,1.4vw,1.18rem)] leading-[1.7] tracking-[-0.025em] text-[#7a7b77]">
+        Right now those five stars live only with us. Posting them on Google is
+        what puts them in front of the next traveler deciding where to stay —
+        and for a hotel our size, that means more than anything we could say
+        about ourselves.
       </p>
 
-      <div className="mt-9 flex justify-center">
+      {/* The whole point of this screen. Full-width, tall, and heavier than any
+          other control on the card so there's no question what to tap next. */}
+      <div className="mt-9">
         <a
           href={GOOGLE_REVIEW_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="btn btn-dark"
+          className="btn btn-dark w-full min-h-[4rem] gap-3 whitespace-nowrap px-5 text-[1.06rem] shadow-[0_12px_32px_rgba(0,0,0,0.18)] sm:min-h-[4.5rem] sm:gap-4 sm:px-7 sm:text-[1.2rem]"
         >
-          <GoogleGlyph className="h-[18px] w-[18px]" />
+          <GoogleGlyph className="h-6 w-6 shrink-0 sm:h-7 sm:w-7" />
           Leave a Google Review
-          <span className="btn-arrow">
-            <ArrowRightIcon className="h-4 w-4" />
+          {/* Decorative only, and the label needs the width on small screens —
+              so it earns its place from sm up, where there's room to spare. */}
+          <span className="btn-arrow hidden p-1.5 sm:inline-flex">
+            <ArrowRightIcon className="h-5 w-5" />
           </span>
         </a>
+        <p className="mt-3.5 text-[0.86rem] tracking-[-0.01em] text-[#a1a199]">
+          Opens Google in a new tab — takes about 30 seconds
+        </p>
       </div>
 
-      <p className="mt-7 text-[0.92rem] leading-relaxed tracking-[-0.02em] text-[#8b8d92]">
+      <p className="mt-8 text-[0.92rem] leading-relaxed tracking-[-0.02em] text-[#8b8d92]">
         Thank you for staying with us — it genuinely makes our day.
       </p>
 
@@ -471,12 +485,9 @@ function ChangeRatingLink({ onChangeRating }: { onChangeRating: () => void }) {
 
 function StarIcon({
   filled,
-  solid,
   className,
 }: {
   filled?: boolean;
-  /** Take both fill and stroke from the text color (for the green badge). */
-  solid?: boolean;
   className?: string;
 }) {
   return (
@@ -484,8 +495,8 @@ function StarIcon({
       viewBox="0 0 24 24"
       className={className}
       aria-hidden="true"
-      fill={solid ? "currentColor" : filled ? "#bfd9bd" : "none"}
-      stroke={solid ? "currentColor" : filled ? "#9ec29e" : "#c9c9c2"}
+      fill={filled ? "#bfd9bd" : "none"}
+      stroke={filled ? "#9ec29e" : "#c9c9c2"}
       strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
