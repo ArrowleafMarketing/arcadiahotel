@@ -9,6 +9,14 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
 
+      // The review gate lives at /leave-a-review. Keep the older /review URL
+      // working — it's already on printed in-room QR cards.
+      {
+        source: "/review",
+        destination: "/leave-a-review",
+        permanent: true,
+      },
+
       // Blog rebranded to "Explore Boise" -> /explore-boise/*
       {
         source: "/blog",

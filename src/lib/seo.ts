@@ -30,6 +30,13 @@ type PageMetaInput = {
   type?: "website" | "article";
   /** Set true for utility pages that shouldn't rank (e.g. thank-you pages). */
   noindex?: boolean;
+  /**
+   * Also block link-following. Only meaningful alongside `noindex`, which on
+   * its own still sends `follow` so link equity isn't dropped. Reserve this for
+   * private links we hand out directly (e.g. /leave-a-review) rather than
+   * pages Google merely shouldn't list.
+   */
+  nofollow?: boolean;
 };
 
 export function pageMeta({
@@ -42,6 +49,7 @@ export function pageMeta({
   imageHeight,
   type = "website",
   noindex = false,
+  nofollow = false,
 }: PageMetaInput): Metadata {
   const canonical = path;
   const images = image
@@ -75,6 +83,6 @@ export function pageMeta({
       description,
       images: images.map((i) => i.url),
     },
-    ...(noindex ? { robots: { index: false, follow: true } } : {}),
+    ...(noindex ? { robots: { index: false, follow: !nofollow } } : {}),
   };
 }

@@ -8,6 +8,9 @@ module.exports = {
   exclude: [
     '/admin',
     '/api/*',
+    // Private post-stay review link — sent directly, never surfaced.
+    '/review',
+    '/leave-a-review',
     '/private/*',
     '/drafts/*',
     '/404',
