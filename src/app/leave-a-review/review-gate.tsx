@@ -193,7 +193,7 @@ function GoogleStep({ onChangeRating }: { onChangeRating: () => void }) {
       <span className="eyebrow mt-7">One Last Step</span>
 
       <h1 className="mt-6 text-[clamp(1.8rem,3.8vw,2.9rem)] font-light leading-[1.06] tracking-[-0.055em] text-[#111111]">
-        Would you share your review & experience on Google?
+        Would you share your experience on Google?
       </h1>
       <p className="mx-auto mt-5 max-w-[470px] text-[clamp(1.02rem,1.4vw,1.18rem)] leading-[1.7] tracking-[-0.025em] text-[#7a7b77]">
         Right now those five stars live only with us. Posting them on Google is
