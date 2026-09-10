@@ -62,8 +62,12 @@ export function ReviewGate() {
       {/* Centers the card when it fits; scrolls with padding when it doesn't. */}
       <div className="flex min-h-full items-center justify-center px-4 py-14 sm:px-6">
         <div className="w-full max-w-[620px]">
-          {step === "rating" && <RatingStep onRate={handleRate} rating={rating} />}
-          {step === "google" && <GoogleStep onChangeRating={handleChangeRating} />}
+          {step === "rating" && (
+            <RatingStep onRate={handleRate} rating={rating} />
+          )}
+          {step === "google" && (
+            <GoogleStep onChangeRating={handleChangeRating} />
+          )}
           {step === "form" && (
             <FeedbackForm
               rating={rating}
@@ -144,7 +148,9 @@ function RatingStep({
               RATING_LABELS[value]
             }`}
             // Roving tabindex: one stop for the whole group.
-            tabIndex={rating === value || (rating === 0 && value === 1) ? 0 : -1}
+            tabIndex={
+              rating === value || (rating === 0 && value === 1) ? 0 : -1
+            }
             onClick={() => onRate(value)}
             onMouseEnter={() => setPreview(value)}
             onFocus={() => setPreview(value)}
@@ -187,13 +193,12 @@ function GoogleStep({ onChangeRating }: { onChangeRating: () => void }) {
       <span className="eyebrow mt-7">One Last Step</span>
 
       <h1 className="mt-6 text-[clamp(1.8rem,3.8vw,2.9rem)] font-light leading-[1.06] tracking-[-0.055em] text-[#111111]">
-        Would you share it on Google?
+        Would you share your review & experience on Google?
       </h1>
       <p className="mx-auto mt-5 max-w-[470px] text-[clamp(1.02rem,1.4vw,1.18rem)] leading-[1.7] tracking-[-0.025em] text-[#7a7b77]">
         Right now those five stars live only with us. Posting them on Google is
-        what puts them in front of the next traveler deciding where to stay —
-        and for a hotel our size, that means more than anything we could say
-        about ourselves.
+        what puts them in front of the next traveler deciding where to stay. It
+        only takes a moment, and we’d really appreciate it.
       </p>
 
       {/* The whole point of this screen. Full-width, tall, and heavier than any
@@ -290,7 +295,9 @@ function FeedbackForm({
       <span className="eyebrow">Tell Us More</span>
 
       <h1 className="mt-6 text-[clamp(1.7rem,3.4vw,2.6rem)] font-light leading-[1.08] tracking-[-0.055em] text-[#111111]">
-        {nearMiss ? "What would have made it five stars?" : "Tell us what went wrong"}
+        {nearMiss
+          ? "What would have made it five stars?"
+          : "Tell us what went wrong"}
       </h1>
       <p className="mt-4 text-[clamp(1rem,1.3vw,1.14rem)] leading-[1.7] tracking-[-0.025em] text-[#7a7b77]">
         {nearMiss
